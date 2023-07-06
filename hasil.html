@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hasil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="mt-2 text-center">
+        <h1>CRes Index</h1>
+        <h4>(Coral Resilience Index)</h4>
+        created by Nadia Aldyza
+        <hr>
+        <h3>Status Kategori</h3>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th class="table-success">Indikator</th>
+                <th class="table-success">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Karang</th>
+                <td><span id="Karang">Tunggu Sebentar...</span></td>
+              </tr>
+              <tr>
+                <th scope="row">CCA</th>
+                <td><span id="CCA">Tunggu Sebentar...</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Bintang Laut</th>
+                <td><span id="Bintang laut">Tunggu Sebentar...</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Turf Algae</th>
+                <td><span id="Turf Algae">Tunggu Sebentar...</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Bulu babi</th>
+                <td><span id="Bulu babi">Tunggu Sebentar...</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Kima</th>
+                <td><span id="Kima">Tunggu Sebentar...</span></td>
+              </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-2 text-center">
+            <h3>Hasil Resiliensi</h3>
+            <button type="button" class="btn btn-outline-info btn-lg"><span id="Resiliensi">Tunggu Sebentar...</span></button>
+        </div>
+        <a href="index.html"><- kembali</a>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            // Make a request to the Google Apps Script function
+            $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbxfMqTQAtb2iNGKSjSMO8DKvPHf6At3hQC1vlmIUZroET-Wfl5aOfGHyrs9jpoVYwHnvA/exec',
+                type: 'GET',
+                dataType: 'json', // Set the expected response type to JSON
+                success: function (response) {
+                    handleResult(response);
+                },
+                error: function (error) {
+                    console.error('Error calling Google Apps Script:', error);
+                }
+            });
+        });
+    
+            function handleResult(result) {
+                for (var key in result) {
+                    if (result.hasOwnProperty(key)) {
+                        var element = document.getElementById(key);
+                        if (element) {
+                            element.textContent = result[key];
+                        }
+                    }
+                }
+            }
+    
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+  </body>
+</html>
