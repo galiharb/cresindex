@@ -51,8 +51,8 @@
                 <input class="form-control" type="text" id="babiInput" name="Bulu_babi" pattern="[0-9]+([,\.][0-9]+)?" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Kima (ind/m2)</label>
-                <input class="form-control" type="text" id="kimaInput" name="Kima" pattern="[0-9]+([,\.][0-9]+)?" required>
+                <label class="form-label">Rubble (%)</label>
+                <input class="form-control" type="text" id="RubbleInput" name="Rubble" pattern="[0-9]+([,\.][0-9]+)?" required>
             </div>
             <button type="submit" id="submitButton" class="btn btn-success">Submit</button>
         </form>
@@ -66,7 +66,7 @@
 
       document.getElementById("submitButton").disabled = true;
       
-      fetch("https://script.google.com/macros/s/AKfycbxfMqTQAtb2iNGKSjSMO8DKvPHf6At3hQC1vlmIUZroET-Wfl5aOfGHyrs9jpoVYwHnvA/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyZy6WY-UnpgNelbhA9EuMNpGyfNW3uzy31IGJvHDwzOWX0tp9cky9UnFU6kGMuzdnPMg/exec", {
         method: "POST",
         body: form
       })
