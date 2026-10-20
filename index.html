@@ -1,94 +1,853 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CRes Index</title>
+    <title>CRes Index - Nadia Aldyza</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#198754">
+
+    <!-- SEO -->
+    <meta name="description" content="CRes Index (Coral Resilience Index) — kalkulator online untuk menilai status resiliensi terumbu karang berdasarkan 6 indikator: tutupan karang, CCA, bintang laut, turf algae, bulu babi, dan rubble. Dibuat oleh Nadia Aldyza.">
+    <meta name="keywords" content="CRes Index, Coral Resilience Index, resiliensi terumbu karang, indeks resiliensi karang, kalkulator terumbu karang, CCA, turf algae, bulu babi, rubble, Nadia Aldyza">
+    <meta name="author" content="Nadia Aldyza">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cresindex.com/">
+
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CRes Index">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:url" content="https://cresindex.com/">
+    <meta property="og:title" content="CRes Index - Nadia Aldyza">
+    <meta property="og:description" content="Kalkulator online untuk menilai status resiliensi terumbu karang berdasarkan 6 indikator ekologi.">
+    <meta property="og:image" content="https://cresindex.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="CRes Index — Coral Resilience Index">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CRes Index - Nadia Aldyza">
+    <meta name="twitter:description" content="Kalkulator online untuk menilai status resiliensi terumbu karang berdasarkan 6 indikator ekologi.">
+    <meta name="twitter:image" content="https://cresindex.com/og-image.png">
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CRes Index",
+      "alternateName": "Coral Resilience Index",
+      "url": "https://cresindex.com/",
+      "description": "Kalkulator online untuk menilai status resiliensi terumbu karang berdasarkan 6 indikator: tutupan karang, CCA, bintang laut, turf algae, bulu babi, dan rubble.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "id",
+      "isAccessibleForFree": true,
+      "author": { "@type": "Person", "name": "Nadia Aldyza", "sameAs": "https://www.instagram.com/nadiamawardi" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        :root {
+            --green: #198754;          /* Bootstrap "success" — warna utama yang sama */
+            --green-dark: #146c43;
+            --green-darker: #0f5132;
+            --green-soft: #d1e7dd;
+            --green-tint: #f0f8f4;
+            --ink: #1b2a23;
+            --muted: #5f6f67;
+            --line: #e3ece7;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--ink);
+            background: #f6faf8;
+            min-height: 100vh;
+        }
+
+        /* ---------- Navbar ---------- */
+        .nav-glass {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 1030;
+            background: rgba(25, 135, 84, 0.92);
+            backdrop-filter: saturate(160%) blur(10px);
+            -webkit-backdrop-filter: saturate(160%) blur(10px);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 20px rgba(15, 81, 50, 0.15);
+        }
+        .nav-glass .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -.01em;
+            text-decoration: none;
+            padding: .85rem 0;
+        }
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 7.5rem 0 7rem;
+            color: #fff;
+            background:
+                radial-gradient(1200px 400px at 85% -10%, rgba(255, 255, 255, 0.18), transparent 60%),
+                radial-gradient(800px 400px at -10% 110%, rgba(255, 255, 255, 0.10), transparent 60%),
+                linear-gradient(135deg, var(--green) 0%, var(--green-dark) 55%, var(--green-darker) 100%);
+        }
+        .hero::after {
+            /* gelombang di bagian bawah */
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: -1px;
+            height: 60px;
+            background: #f6faf8;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30 C 240 70 480 0 720 25 S 1200 60 1440 20 V60 H0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+                    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30 C 240 70 480 0 720 25 S 1200 60 1440 20 V60 H0Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .35rem .85rem;
+            border-radius: 999px;
+            font-size: .8rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .hero h1 {
+            font-weight: 800;
+            letter-spacing: -.03em;
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            margin: 1rem 0 .5rem;
+        }
+        .hero p.lead {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            margin-bottom: 0;
+        }
+        .hero .author {
+            margin-top: 1.25rem;
+            font-size: .9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .hero .author strong { color: #fff; font-weight: 600; }
+        .hero .author a,
+        .result-head small a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            transition: border-color .15s;
+        }
+        .hero .author a:hover,
+        .result-head small a:hover { border-bottom-color: #fff; }
+
+        /* ---------- Pilihan bahasa ---------- */
+        .lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: .75rem;
+            margin-top: 1rem;
+        }
+        .lang-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            background: none;
+            opacity: .6;
+            cursor: pointer;
+            transition: opacity .15s, transform .15s, box-shadow .15s, border-color .15s;
+        }
+        .lang-btn svg { display: block; width: 100%; height: 100%; }
+        .lang-btn:hover { opacity: .9; transform: translateY(-1px); }
+        .lang-btn.active {
+            opacity: 1;
+            border-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+        .lang-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+        /* ---------- Layout utama ---------- */
+        .main-wrap {
+            position: relative;
+            margin-top: -4.5rem;
+            padding-bottom: 4rem;
+        }
+
+        .card-modern {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(15, 81, 50, 0.08), 0 2px 6px rgba(15, 81, 50, 0.04);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: -.01em;
+            margin-bottom: 1.25rem;
+        }
+        .section-title .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: var(--green-soft);
+            color: var(--green-dark);
+            flex-shrink: 0;
+        }
+
+        /* ---------- Panduan ---------- */
+        .steps { list-style: none; padding: 0; margin: 0; }
+        .steps li {
+            display: flex;
+            gap: .85rem;
+            align-items: flex-start;
+            padding: .8rem 0;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+        .steps li + li { border-top: 1px dashed var(--line); }
+        .steps .num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            font-size: .8rem;
+            font-weight: 700;
+            color: #fff;
+            background: var(--green);
+        }
+        .steps code {
+            color: var(--green-dark);
+            background: var(--green-tint);
+            padding: .1rem .4rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* ---------- Form ---------- */
+        .field label {
+            font-weight: 600;
+            font-size: .9rem;
+            margin-bottom: .4rem;
+            display: block;
+        }
+        .input-wrap { position: relative; }
+        .input-wrap .form-control {
+            height: 52px;
+            border-radius: 12px;
+            border: 1.5px solid var(--line);
+            background: #fbfdfc;
+            padding-right: 5.5rem;
+            font-weight: 500;
+            transition: border-color .15s, box-shadow .15s, background .15s;
+        }
+        .input-wrap .form-control:hover { border-color: #c7dcd1; }
+        .input-wrap .form-control:focus {
+            border-color: var(--green);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.15);
+        }
+        .input-wrap .unit {
+            position: absolute;
+            right: .5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--green-dark);
+            background: var(--green-tint);
+            border: 1px solid var(--green-soft);
+            padding: .25rem .55rem;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .was-validated .form-control:invalid,
+        .form-control.is-invalid { border-color: #dc3545; background-image: none; padding-right: 5.5rem; }
+        .was-validated .form-control:valid { border-color: var(--green); background-image: none; padding-right: 5.5rem; }
+
+        .invalid-msg {
+            display: none;
+            margin-top: .35rem;
+            font-size: .8rem;
+            font-weight: 500;
+            color: #dc3545;
+        }
+        .field.has-error .invalid-msg { display: block; }
+        .field.has-error .form-control { border-color: #dc3545; }
+
+        .btn-submit {
+            height: 54px;
+            border-radius: 14px;
+            font-weight: 700;
+            letter-spacing: .01em;
+            border: 0;
+            color: #fff;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            box-shadow: 0 8px 20px rgba(25, 135, 84, 0.3);
+            transition: transform .15s, box-shadow .15s, filter .15s;
+        }
+        .btn-submit:hover:not(:disabled) {
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(25, 135, 84, 0.35);
+            filter: brightness(1.05);
+        }
+        .btn-submit:active:not(:disabled) { transform: translateY(0); }
+        .btn-submit:disabled { color: #fff; opacity: .75; }
+
+        .alert-modern {
+            border-radius: 12px;
+            border: 1px solid #f5c2c7;
+            font-size: .9rem;
+        }
+
+        /* ---------- Modal hasil ---------- */
+        .modal-content.result {
+            border: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(15, 81, 50, 0.25);
+        }
+        .result-head {
+            color: #fff;
+            padding: 1.5rem 1.5rem 1.25rem;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 55%, var(--green-darker) 100%);
+        }
+        .result-head h5 { font-weight: 800; letter-spacing: -.02em; margin: 0; }
+        .result-head small { color: rgba(255, 255, 255, 0.8); }
+        .result-head .btn-close { filter: invert(1) grayscale(1) brightness(2); opacity: .8; }
+
+        .result-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .result-table th, .result-table td { padding: .7rem 1rem; font-size: .95rem; }
+        .result-table thead th {
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            color: var(--green-dark);
+            background: var(--green-tint);
+            border-bottom: 1px solid var(--green-soft);
+        }
+        .result-table thead th:first-child { border-top-left-radius: 12px; }
+        .result-table thead th:last-child { border-top-right-radius: 12px; text-align: right; }
+        .result-table tbody th { font-weight: 600; }
+        .result-table tbody td { text-align: right; }
+        .result-table tbody tr + tr > * { border-top: 1px solid var(--line); }
+
+        .pill {
+            display: inline-block;
+            min-width: 76px;
+            text-align: center;
+            padding: .25rem .7rem;
+            border-radius: 999px;
+            font-size: .82rem;
+            font-weight: 700;
+            background: var(--green-tint);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        .verdict {
+            margin-top: 1.25rem;
+            padding: 1.25rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--green-soft);
+            background: var(--green-tint);
+        }
+        .verdict .label {
+            font-size: .78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--muted);
+        }
+        .verdict .value {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            margin-top: .25rem;
+        }
+        .verdict.tinggi { background: #e8f5ee; border-color: #a3cfbb; }
+        .verdict.tinggi .value { color: var(--green-dark); }
+        .verdict.sedang { background: #fff8e6; border-color: #ffe08a; }
+        .verdict.sedang .value { color: #997404; }
+        .verdict.rendah { background: #fdecee; border-color: #f1aeb5; }
+        .verdict.rendah .value { color: #b02a37; }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: .85rem;
+            padding: 0 0 2.5rem;
+        }
+
+        @media (max-width: 575.98px) {
+            .hero { padding: 6.5rem 0 6rem; }
+            .card-modern { border-radius: 16px; }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-light bg-success">
-        <div class="container-fluid">
-          <a class="navbar-brand text-white" href="index.html">CRes Index</a>
+    <nav class="nav-glass">
+        <div class="container">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12"/><path d="M12 12c0-3 2-5 5-6"/><path d="M12 15c0-3-2-5-5-6"/><path d="M17 6c0-2 1-3 2-4"/><path d="M7 9C7 7 6 5 4 4"/><path d="M6 22h12"/></svg>
+                </span>
+                CRes Index
+            </a>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="mt-5 text-center">
-            <br><br>
-            <h4>Coral Resilience Index</h4>
-            created by Nadia Aldyza
-            <hr>
+    <header class="hero">
+        <div class="container text-center">
+            <span class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 7c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+                <span data-i18n="badge">Kalkulator Resiliensi</span>
+            </span>
+            <h1>Coral Resilience Index</h1>
+            <p class="lead" data-i18n="lead">Masukkan data indikator terumbu karang untuk mengetahui status resiliensinya.</p>
+            <div class="author">created by <a href="https://www.instagram.com/nadiamawardi" target="_blank" rel="noopener"><strong>Nadia Aldyza</strong></a></div>
+            <div class="lang-switch" role="group" aria-label="Bahasa / Language">
+                <button type="button" class="lang-btn active" data-lang="id" title="Bahasa Indonesia" aria-label="Bahasa Indonesia" aria-pressed="true">
+                    <svg viewBox="0 0 2 2" preserveAspectRatio="none" aria-hidden="true"><rect width="2" height="1" fill="#ce1126"/><rect y="1" width="2" height="1" fill="#fff"/></svg>
+                </button>
+                <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English" aria-pressed="false">
+                    <svg viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                        <clipPath id="ukT"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+                        <rect width="60" height="30" fill="#012169"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukT)" stroke="#c8102e" stroke-width="4"/>
+                        <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                        <path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <h3>Cara penggunaan :</h3>
-        <ul>
-            <li>Input data yang sesuai dengan Indikator pada form</li>
-            <li>Input hanya berupa angka</li>
-            <li>Gunakan tanda koma (,) untuk bilangan desimal</li>
-        </ul>
-        <hr>
-        <h3>Form Input Data</h3>
-        <form id="dataForm">
-            <div class="mb-3">
-                <label class="form-label">Karang (%)</label>
-                <input type="text" class="form-control" id="karangInput" name="Karang" pattern="[0-9]+([,\.][0-9]+)?" oninput="checkInput(event)" required>
+    </header>
+
+    <main class="main-wrap">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+                <!-- Panduan -->
+                <div class="col-lg-4">
+                    <div class="card-modern p-4 h-100">
+                        <div class="section-title">
+                            <span class="icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            </span>
+                            <span data-i18n="guideTitle">Cara penggunaan</span>
+                        </div>
+                        <ul class="steps">
+                            <li><span class="num">1</span><span data-i18n="step1">Input data yang sesuai dengan indikator pada form</span></li>
+                            <li><span class="num">2</span><span data-i18n="step2">Input hanya berupa angka</span></li>
+                            <li><span class="num">3</span><span data-i18n-html="step3">Gunakan tanda koma <code>,</code> untuk bilangan desimal (titik otomatis diubah jadi koma)</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="col-lg-8">
+                    <div class="card-modern p-4 p-md-5">
+                        <div class="section-title">
+                            <span class="icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+                            </span>
+                            <span data-i18n="formTitle">Form Input Data</span>
+                        </div>
+
+                        <form id="dataForm" novalidate>
+                            <div class="row g-3">
+                                <div class="col-md-6 field">
+                                    <label for="karangInput" data-i18n="ind_Karang">Karang</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="karangInput" name="Karang" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" data-max="100" required>
+                                        <span class="unit">%</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                                <div class="col-md-6 field">
+                                    <label for="ccaInput" data-i18n="ind_CCA">CCA</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="ccaInput" name="CCA" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" data-max="100" required>
+                                        <span class="unit">%</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                                <div class="col-md-6 field">
+                                    <label for="bintangInput" data-i18n="ind_Bintang_laut">Bintang laut</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="bintangInput" name="Bintang_laut" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" required>
+                                        <span class="unit">ind/m²</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                                <div class="col-md-6 field">
+                                    <label for="algaeInput" data-i18n="ind_Turf_Algae">Turf Algae</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="algaeInput" name="Turf_Algae" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" data-max="100" required>
+                                        <span class="unit">%</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                                <div class="col-md-6 field">
+                                    <label for="babiInput" data-i18n="ind_Bulu_babi">Bulu babi</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="babiInput" name="Bulu_babi" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" required>
+                                        <span class="unit">ind/m²</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                                <div class="col-md-6 field">
+                                    <label for="RubbleInput" data-i18n="ind_Rubble">Rubble</label>
+                                    <div class="input-wrap">
+                                        <input type="text" inputmode="decimal" class="form-control" id="RubbleInput" name="Rubble" pattern="[0-9]+(,[0-9]+)?" placeholder="0" maxlength="10" autocomplete="off" data-max="100" required>
+                                        <span class="unit">%</span>
+                                    </div>
+                                    <div class="invalid-msg"></div>
+                                </div>
+                            </div>
+
+                            <div id="formError" class="alert alert-danger alert-modern mt-4 mb-0 d-none" role="alert"></div>
+
+                            <button type="submit" id="submitButton" class="btn btn-submit w-100 mt-4">
+                                <span class="btn-label" data-i18n="submit">Hitung Index</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">CCA (%)</label>
-                <input class="form-control" type="text" id="ccaInput" name="CCA" pattern="[0-9]+([,\.][0-9]+)?" required>
+        </div>
+    </main>
+
+    <footer>
+        &copy; CRes Index &middot; Coral Resilience Index
+    </footer>
+
+    <!-- Modal hasil perhitungan -->
+    <div class="modal fade" id="hasilModal" tabindex="-1" aria-labelledby="hasilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content result">
+                <div class="result-head d-flex align-items-start justify-content-between">
+                    <div>
+                        <h5 id="hasilModalLabel" data-i18n="modalTitle">Status Kategori</h5>
+                        <small>Coral Resilience Index &middot; created by <a href="https://www.instagram.com/nadiamawardi" target="_blank" rel="noopener">Nadia Aldyza</a></small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-i18n-aria="close" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <table class="result-table">
+                        <thead>
+                            <tr><th data-i18n="thIndicator">Indikator</th><th data-i18n="thStatus">Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row" data-i18n="ind_Karang">Karang</th><td><span class="pill" data-key="Karang">-</span></td></tr>
+                            <tr><th scope="row" data-i18n="ind_CCA">CCA</th><td><span class="pill" data-key="CCA">-</span></td></tr>
+                            <tr><th scope="row" data-i18n="ind_Bintang_laut">Bintang Laut</th><td><span class="pill" data-key="Bintang_laut">-</span></td></tr>
+                            <tr><th scope="row" data-i18n="ind_Turf_Algae">Turf Algae</th><td><span class="pill" data-key="Turf_Algae">-</span></td></tr>
+                            <tr><th scope="row" data-i18n="ind_Bulu_babi">Bulu babi</th><td><span class="pill" data-key="Bulu_babi">-</span></td></tr>
+                            <tr><th scope="row" data-i18n="ind_Rubble">Rubble</th><td><span class="pill" data-key="Rubble">-</span></td></tr>
+                        </tbody>
+                    </table>
+
+                    <div id="verdictBox" class="verdict">
+                        <div class="label" data-i18n="verdict">Hasil Resiliensi</div>
+                        <div id="Resiliensi" class="value">-</div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn btn-submit w-100" data-bs-dismiss="modal" data-i18n="recalc">Hitung Ulang</button>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Bintang laut (ind/m2)</label>
-                <input class="form-control" type="text" id="bintangInput" name="Bintang_laut" pattern="[0-9]+([,\.][0-9]+)?" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Turf Algae (%)</label>
-                <input class="form-control" type="text" id="algaeInput" name="Turf_Algae" pattern="[0-9]+([,\.][0-9]+)?" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Bulu babi (ind/m2)</label>
-                <input class="form-control" type="text" id="babiInput" name="Bulu_babi" pattern="[0-9]+([,\.][0-9]+)?" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Rubble (%)</label>
-                <input class="form-control" type="text" id="RubbleInput" name="Rubble" pattern="[0-9]+([,\.][0-9]+)?" required>
-            </div>
-            <button type="submit" id="submitButton" class="btn btn-success">Submit</button>
-        </form>
+        </div>
     </div>
-    <br><br><br>
-  <script>    
+
+  <script>
+    // ---------- Bahasa ----------
+    var I18N = {
+      id: {
+        badge: "Kalkulator Resiliensi",
+        lead: "Masukkan data indikator terumbu karang untuk mengetahui status resiliensinya.",
+        guideTitle: "Cara penggunaan",
+        step1: "Input data yang sesuai dengan indikator pada form",
+        step2: "Input hanya berupa angka",
+        step3: "Gunakan tanda koma <code>,</code> untuk bilangan desimal (titik otomatis diubah jadi koma)",
+        formTitle: "Form Input Data",
+        ind_Karang: "Karang",
+        ind_CCA: "CCA",
+        ind_Bintang_laut: "Bintang laut",
+        ind_Turf_Algae: "Turf Algae",
+        ind_Bulu_babi: "Bulu babi",
+        ind_Rubble: "Rubble",
+        submit: "Hitung Index",
+        modalTitle: "Status Kategori",
+        close: "Tutup",
+        thIndicator: "Indikator",
+        thStatus: "Status",
+        verdict: "Hasil Resiliensi",
+        recalc: "Hitung Ulang",
+        Tinggi: "Tinggi",
+        Sedang: "Sedang",
+        Rendah: "Rendah",
+        errRequired: "Wajib diisi.",
+        errFormat: "Hanya angka, contoh: 12 atau 2,5",
+        errMax: "Maksimal {max}%.",
+        errOnlyNumber: "Hanya angka yang diperbolehkan.",
+        errSummary: "Periksa kembali isian yang ditandai merah."
+      },
+      en: {
+        badge: "Resilience Calculator",
+        lead: "Enter coral reef indicator data to find out its resilience status.",
+        guideTitle: "How to use",
+        step1: "Enter data matching each indicator in the form",
+        step2: "Numbers only",
+        step3: "Use a comma <code>,</code> for decimals (dots are converted to commas automatically)",
+        formTitle: "Data Input Form",
+        ind_Karang: "Coral",
+        ind_CCA: "CCA",
+        ind_Bintang_laut: "Sea star",
+        ind_Turf_Algae: "Turf Algae",
+        ind_Bulu_babi: "Sea urchin",
+        ind_Rubble: "Rubble",
+        submit: "Calculate Index",
+        modalTitle: "Category Status",
+        close: "Close",
+        thIndicator: "Indicator",
+        thStatus: "Status",
+        verdict: "Resilience Result",
+        recalc: "Recalculate",
+        Tinggi: "High",
+        Sedang: "Medium",
+        Rendah: "Low",
+        errRequired: "This field is required.",
+        errFormat: "Numbers only, e.g. 12 or 2,5",
+        errMax: "Maximum {max}%.",
+        errOnlyNumber: "Only numbers are allowed.",
+        errSummary: "Please check the fields marked in red."
+      }
+    };
+
+    var lang = "id";
+    var hasilTerakhir = null;
+
+    function t(key, params) {
+      var teks = I18N[lang][key] || key;
+      for (var p in params) teks = teks.replace("{" + p + "}", params[p]);
+      return teks;
+    }
+
+    function setBahasa(baru) {
+      lang = baru;
+      document.documentElement.lang = baru;
+
+      document.querySelectorAll("[data-i18n]").forEach(function(el) { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll("[data-i18n-html]").forEach(function(el) { el.innerHTML = t(el.dataset.i18nHtml); });
+      document.querySelectorAll("[data-i18n-aria]").forEach(function(el) { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+
+      document.querySelectorAll(".lang-btn").forEach(function(btn) {
+        var aktif = btn.dataset.lang === baru;
+        btn.classList.toggle("active", aktif);
+        btn.setAttribute("aria-pressed", aktif);
+      });
+
+      // Terjemahkan ulang pesan error & hasil yang sedang tampil
+      inputs.forEach(function(el) { tampilkanError(el, el.dataset.err || ""); });
+      var errorBox = document.getElementById("formError");
+      if (!errorBox.classList.contains("d-none")) errorBox.textContent = t("errSummary");
+      if (hasilTerakhir) isiHasil(hasilTerakhir);
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() { setBahasa(btn.dataset.lang); });
+    });
+
+    // Logika perhitungan dipindahkan dari spreadsheet (lihat Readme.md bagian 5).
+    // sheetMaxSedang = batas atas "Sedang" persis seperti rumus spreadsheet (inklusif)
+    // tinggi         = batas "Tinggi" menurut tabel acuan sheet Rumus
+    var THRESHOLDS = {
+      Karang:       { rendah: 16,   sheetMaxSedang: 32.99, tinggi: 32,   faktor: "+" },
+      CCA:          { rendah: 3,    sheetMaxSedang: 5.99,  tinggi: 6,    faktor: "+" },
+      Bintang_laut: { rendah: 0.05, sheetMaxSedang: 0.09,  tinggi: 0.1,  faktor: "+" },
+      Turf_Algae:   { rendah: 15,   sheetMaxSedang: 29.99, tinggi: 30,   faktor: "-" },
+      Bulu_babi:    { rendah: 0.03, sheetMaxSedang: 0.059, tinggi: 0.06, faktor: "-" },
+      Rubble:       { rendah: 10,   sheetMaxSedang: 19.99, tinggi: 20,   faktor: "-" }
+    };
+
+    var SKOR = { Tinggi: 3, Sedang: 2, Rendah: 1 };
+
+    // Terima "2,83", "2.83", 2.83 → 2.83. Kosong/invalid → null
+    function toNumber(v) {
+      if (v === null || v === undefined || String(v).trim() === "") return null;
+      var n = Number(String(v).trim().replace(",", "."));
+      return Number.isFinite(n) ? n : null;
+    }
+
+    // mode: "sheet" (identik spreadsheet) | "acuan" (sesuai tabel Rumus)
+    function klasifikasi(nilai, t, mode) {
+      if (nilai === null) return "";
+      if (nilai < t.rendah) return "Rendah";
+      if (mode === "acuan") return nilai < t.tinggi ? "Sedang" : "Tinggi";
+      return nilai <= t.sheetMaxSedang ? "Sedang" : "Tinggi";
+    }
+
+    function hitungResiliensi(input, mode) {
+      mode = mode || "sheet";
+      var kategori = {}, positif = 0, negatif = 0, adaData = false;
+
+      Object.keys(THRESHOLDS).forEach(function(key) {
+        var t = THRESHOLDS[key];
+        var k = klasifikasi(toNumber(input[key]), t, mode);
+        kategori[key] = k;
+        if (k) {
+          adaData = true;
+          if (t.faktor === "+") positif += SKOR[k];
+          else negatif += SKOR[k];
+        }
+      });
+
+      var Resiliensi = "";
+      if (adaData && positif + negatif !== 0) {
+        Resiliensi = positif === negatif ? "Sedang" : positif > negatif ? "Tinggi" : "Rendah";
+      }
+      return { kategori: kategori, positif: positif, negatif: negatif, Resiliensi: Resiliensi };
+    }
+
+    // Kategori internal tetap Tinggi/Sedang/Rendah; hanya teks tampilannya yang diterjemahkan
+    function isiHasil(hasil) {
+      document.querySelectorAll("#hasilModal [data-key]").forEach(function(el) {
+        var k = hasil.kategori[el.dataset.key];
+        el.textContent = k ? t(k) : "-";
+      });
+      document.getElementById("Resiliensi").textContent = hasil.Resiliensi ? t(hasil.Resiliensi) : "-";
+      document.getElementById("verdictBox").className = "verdict " + hasil.Resiliensi.toLowerCase();
+    }
+
+    function tampilkanHasil(hasil) {
+      hasilTerakhir = hasil;
+      isiHasil(hasil);
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("hasilModal")).show();
+    }
+
+    // ---------- Validasi input ----------
+    var inputs = document.querySelectorAll("#dataForm input[name]");
+
+    // Kode error untuk satu field ("" = valid)
+    function cekField(el) {
+      var v = el.value.trim();
+      if (v === "") return "errRequired";
+      if (!/^[0-9]+(,[0-9]+)?$/.test(v)) return "errFormat";
+      var n = toNumber(v);
+      if (el.dataset.max && n > Number(el.dataset.max)) return "errMax";
+      return "";
+    }
+
+    // Simpan kode error di elemen supaya pesannya bisa diterjemahkan ulang saat ganti bahasa
+    function tampilkanError(el, kode) {
+      var pesan = kode ? t(kode, { max: el.dataset.max }) : "";
+      el.dataset.err = kode;
+      el.setCustomValidity(pesan);
+      var field = el.closest(".field");
+      field.querySelector(".invalid-msg").textContent = pesan;
+      field.classList.toggle("has-error", pesan !== "");
+    }
+
+    inputs.forEach(function(el) {
+      el.addEventListener("input", function() {
+        // Titik otomatis jadi koma (sesuai panduan), lalu buang huruf/simbol:
+        // sisakan angka dan satu koma desimal
+        var nilai = el.value.replace(/\./g, ",");
+        var bersih = nilai.replace(/[^0-9,]/g, "");
+        var idx = bersih.indexOf(",");
+        if (idx !== -1) {
+          bersih = bersih.slice(0, idx + 1) + bersih.slice(idx + 1).replace(/,/g, "");
+        }
+        var adaYangDibuang = bersih !== nilai;
+        if (bersih !== el.value) el.value = bersih;
+
+        if (adaYangDibuang) {
+          tampilkanError(el, "errOnlyNumber");
+        } else if (el.closest(".field").classList.contains("has-error")) {
+          tampilkanError(el, cekField(el));
+        }
+      });
+      el.addEventListener("blur", function() {
+        if (el.value !== "") tampilkanError(el, cekField(el));
+      });
+    });
+
     document.getElementById("dataForm").addEventListener("submit", function(event) {
       event.preventDefault(); // Prevent form submission
-      
-      var form = new FormData(event.target); // Create a FormData object from the form
 
-      document.getElementById("submitButton").disabled = true;
-      
-      fetch("https://script.google.com/macros/s/AKfycbxfL8oPZ7wQUjn9hga55oFRQhIdkgCO7cg0jgyINbniPXBGw8l8WU1zNp6G9OYKLmbegw/exec", {
+      var formEl = event.target;
+      var errorBox = document.getElementById("formError");
+
+      errorBox.classList.add("d-none");
+
+      // Wajibkan ke-6 input terisi angka yang valid sebelum menghitung
+      var adaError = false;
+      inputs.forEach(function(el) {
+        var pesan = cekField(el);
+        tampilkanError(el, pesan);
+        if (pesan) adaError = true;
+      });
+      if (adaError) {
+        formEl.querySelector(".has-error input").focus();
+        errorBox.textContent = t("errSummary");
+        errorBox.classList.remove("d-none");
+        return;
+      }
+
+      var form = new FormData(formEl);
+      tampilkanHasil(hitungResiliensi(Object.fromEntries(form)));
+
+      // Tetap catat data ke Google Sheet (hanya logging, tidak menunggu respons)
+      fetch("https://script.google.com/macros/s/AKfycbzxfAwozGJ9dW5a0BBo3bjPCno0RtidDwTa36BeN1Uazp_UpTM-_opk0Uvm-zeSRkgNzA/exec", {
         method: "POST",
         body: form
       })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        console.log(data.message); // Log the response message
-        if (data.message === "Data submitted successfully") {
-          window.location.href = "hasil.html"; // Redirect to hasil.html
-        }
-      })
       .catch(function(error) {
-        console.error("Error:", error);
-      })
-      .finally(function() {
-        document.getElementById("submitButton").disabled = false;
+        console.error("Gagal mencatat ke Google Sheet:", error);
       });
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </body>
 </html>
